@@ -1,16 +1,20 @@
 {
-  "name": "@dotred/crypto-pay",
+  "name": "crypto-pay",
   "version": "1.0.0",
-  "description": "Crypto Pay is a payment system based on @CryptoBot, which allows you to accept payments in cryptocurrency using the API.",
-  "main": "index.ts",
+  "description": "",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [
-    "crypto",
-    "toncoin",
-    "ton"
-  ],
-  "author": "whitered932",
-  "license": "ISC"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/whitered932/crypto-pay.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/whitered932/crypto-pay/issues"
+  },
+  "homepage": "https://github.com/whitered932/crypto-pay#readme"
 }
