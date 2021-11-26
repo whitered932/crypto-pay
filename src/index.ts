@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import * as queryString from 'querystring';
 
 export enum Asset {
@@ -42,6 +42,22 @@ export interface ConfirmPayment {
   invoice_id: number;
 }
 
+interface ResponseData<T = any> {
+  ok: boolean;
+  error?: {
+    code: number;
+    name: string;
+  };
+  result: T;
+}
+
+const getDataOrFail = (responseData: ResponseData) => {
+  if (!responseData.ok) {
+    throw new Error(`${responseData.error?.name} ${responseData.error?.code}`);
+  }
+  return responseData.result;
+};
+
 export default (token: string, net: 'main' | 'test' = 'main') => {
   const url = net === 'main' ? 'https://pay.crypt.bot/' : 'https://testnet-pay.crypt.bot/';
   const instance = axios.create({
@@ -50,39 +66,39 @@ export default (token: string, net: 'main' | 'test' = 'main') => {
 
   return {
     getMe: async () => {
-      const response = await instance.get(`app${token}/getMe`);
-      return response.data;
+      const { data } = (await instance.get(`app${token}/getMe`)) as AxiosResponse<ResponseData>;
+      return getDataOrFail(data);
     },
     createInvoice: async (values: CreateInvoice) => {
-      const res = await instance.post<CreateInvoice>(`app${token}/createInvoice`, values);
-      return res.data;
+      const { data } = (await instance.post(`app${token}/createInvoice`, values)) as AxiosResponse<ResponseData>;
+      return getDataOrFail(data);
     },
     getInvoices: async (values: GetInvoices) => {
       const preparedIds = values.invoice_ids?.join(',');
       const qs = queryString.stringify({ ...values, invoice_ids: preparedIds });
-      const res = await instance.get(`app${token}/getInvoices?${qs}`);
-      return res.data;
+      const { data }: AxiosResponse<ResponseData> = await instance.get(`app${token}/getInvoices?${qs}`);
+      return getDataOrFail(data);
     },
     getPayments: async (values: GetPayments) => {
       const qs = queryString.stringify(values as any);
-      const res = await instance.get(`app${token}/getPayments?${qs}`);
-      return res.data;
+      const { data }: AxiosResponse<ResponseData> = await instance.get(`app${token}/getPayments?${qs}`);
+      return getDataOrFail(data);
     },
     confirmPayment: async (values: ConfirmPayment) => {
-      const res = await instance.post<ConfirmPayment>(`app${token}/confirmPayment`, values);
-      return res.data;
+      const { data }: AxiosResponse<ResponseData> = await instance.post(`app${token}/confirmPayment`, values);
+      return getDataOrFail(data);
     },
     getBalance: async () => {
-      const res = await instance.get(`app${token}/getBalance`);
-      return res.data;
+      const { data }: AxiosResponse<ResponseData> = await instance.get(`app${token}/getBalance`);
+      return getDataOrFail(data);
     },
     getExchangeRates: async () => {
-      const res = await instance.get(`app${token}/getExchangeRates`);
-      return res.data;
+      const { data }: AxiosResponse<ResponseData> = await instance.get(`app${token}/getExchangeRates`);
+      return getDataOrFail(data);
     },
     getCurrencies: async () => {
-      const res = await instance.get(`app${token}/getCurrencies`);
-      return res.data;
+      const { data }: AxiosResponse<ResponseData> = await instance.get(`app${token}/getCurrencies`);
+      return getDataOrFail(data);
     },
   };
 };
