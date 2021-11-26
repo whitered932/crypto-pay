@@ -1,10 +1,10 @@
 {
-  "name": "crypto-pay",
+  "name": "@dotred/crypto-pay",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "npm run build",
     "build": "tsc"
   },
   "files": [
@@ -14,7 +14,13 @@
     "type": "git",
     "url": "git+https://github.com/whitered932/crypto-pay.git"
   },
-  "keywords": [],
+  "keywords": [
+    "cryto",
+    "api",
+    "bot",
+    "cryptobot",
+    "telegram"
+  ],
   "author": "whitered932",
   "license": "ISC",
   "bugs": {
@@ -22,7 +28,15 @@
   },
   "homepage": "https://github.com/whitered932/crypto-pay#readme",
   "devDependencies": {
+    "@babel/preset-typescript": "^7.16.0",
+    "@types/jest": "^27.0.3",
+    "@types/node": "^16.11.10",
+    "jest": "^27.3.1",
     "prettier": "^2.5.0",
+    "ts-jest": "^27.0.7",
     "typescript": "^4.5.2"
+  },
+  "dependencies": {
+    "axios": "^0.24.0"
   }
 }
