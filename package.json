@@ -4,17 +4,25 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc"
   },
+  "files": [
+    "lib/**/*"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/whitered932/crypto-pay.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "whitered932",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/whitered932/crypto-pay/issues"
   },
-  "homepage": "https://github.com/whitered932/crypto-pay#readme"
+  "homepage": "https://github.com/whitered932/crypto-pay#readme",
+  "devDependencies": {
+    "prettier": "^2.5.0",
+    "typescript": "^4.5.2"
+  }
 }
