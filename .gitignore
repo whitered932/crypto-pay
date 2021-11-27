@@ -1,6 +1,7 @@
 .idea
 .vscode
 node_modules
-./lib
 index.d.ts
 index.js
+types.d.ts
+types.js

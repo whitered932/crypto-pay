@@ -1,80 +1,118 @@
-import axios from 'axios';
-import {
-  getMe,
-  getPayments,
-  createInvoice,
-  confirmPayment,
-  getExchangeRates,
-  getBalance,
-  getCurrencies,
-  getInvoices,
-} from './lib';
+import axios, { AxiosInstance, AxiosResponse } from 'axios';
+import { CreateInvoice, GetInvoices, GetPayments } from './types';
+import * as queryString from 'querystring';
+
+interface ResponseData<T = never> {
+  ok: boolean;
+  error?: {
+    code: number;
+    name: string;
+  };
+  result: T;
+}
 
 /**
- * Use this method to create a new pay-instance. Returns an object containing all the methods listed below
- * @param token
- * @param net
+ * Use this method to create a new pay-instance
+ * @param {String} token
+ * @param {('main'|'test')} type default: main
+ * @returns {PayInstance}
  */
-export default (token: string, net: 'main' | 'test' = 'main') => {
-  const url = net === 'main' ? 'https://pay.crypt.bot/' : 'https://testnet-pay.crypt.bot/';
-  const instance = axios.create({
-    baseURL: url,
-  });
+export default (token: string, type: 'test' | 'main' = 'main') => new PayInstance(token, type);
 
-  return {
-    /**
-     * A simple method for testing your app's authentication token. Requires no parameters. Returns basic information about the app.
-     * @type {Function}
-     */
-    getMe: getMe(instance, token),
-    /**
-     * Use this method to create a new invoice. Returns object of created invoice.
-     * @type {Function}
-     */
-    createInvoice: createInvoice(instance, token),
-    /**
-     * Use this method to get invoices of your app. On success, the returns array of invoices.
-     * @type {Function}
-     */
-    getInvoices: getInvoices(instance, token),
-    /**
-     * Use this method to get paid and unconfirmed invoices of your app. On success, the returns array of paid and unconfirmed invoices.
-     * @type {Function}
-     */
-    getPayments: getPayments(instance, token),
-    /**
-     * Use this method to confirm paid invoice of your app. On success, the return confirmed invoice.
-     * @type {Function}
-     * @param {Number} invoice_id
-     */
-    confirmPayment: confirmPayment(instance, token),
-    /**
-     * Use this method to get balance of your app. Returns array of assets.
-     * @type {Function}
-     */
-    getBalance: getBalance(instance, token),
-    /**
-     * Use this method to get exchange rates of supported currencies. Returns array of currencies.
-     * @type {Function}
-     */
-    getExchangeRates: getExchangeRates(instance, token),
-    /**
-     * Use this method to supported currencies. Returns array of currencies.
-     * @type {Function}
-     */
-    getCurrencies: getCurrencies(instance, token),
-  };
-};
+/**
+ * Pay instance
+ */
+export class PayInstance {
+  private instance: AxiosInstance;
 
-export {
-  getMe,
-  getPayments,
-  createInvoice,
-  confirmPayment,
-  getExchangeRates,
-  getBalance,
-  getCurrencies,
-  getInvoices,
-  Asset,
-  Status,
-} from './lib';
+  constructor(token: string, type: 'test' | 'main' = 'main') {
+    const baseURL = type === 'main' ? `https://pay.crypt.bot/app${token}` : `https://testnet-pay.crypt.bot/app${token}`;
+    this.instance = axios.create({
+      baseURL,
+    });
+  }
+
+  /**
+   * A simple method for testing your app's authentication token. Requires no parameters. Returns basic information about the app.
+   */
+  async getMe() {
+    const { data } = (await this.instance.get(`getMe`)) as AxiosResponse<ResponseData>;
+    return this.getResultOrFail(data);
+  }
+
+  /**
+   * Use this method to create a new invoice. Returns object of created invoice.
+   * @param {CreateInvoice} values
+   */
+  async createInvoice<T>(values: CreateInvoice<T>) {
+    const { data } = (await this.instance.post(`createInvoice`, values)) as AxiosResponse<ResponseData>;
+    return this.getResultOrFail(data);
+  }
+
+  /**
+   * Use this method to get invoices of your app. On success, the returns array of invoices.
+   * @param {GetInvoices} values
+   */
+  async getInvoices(values: GetInvoices) {
+    let qs: string;
+    if (values.invoice_ids) {
+      qs = queryString.stringify({ ...values, invoice_ids: values.invoice_ids?.join(',') });
+    } else {
+      qs = queryString.stringify(values as any);
+    }
+    const { data }: AxiosResponse<ResponseData> = await this.instance.get(`getInvoices?${qs}`);
+    return this.getResultOrFail(data);
+  }
+
+  /**
+   * Use this method to get paid and unconfirmed invoices of your app. On success, the returns array of paid and unconfirmed invoices.
+   * @param {GetPayments} values
+   */
+  async getPayments(values: GetPayments) {
+    const qs = queryString.stringify(values as any);
+    const { data }: AxiosResponse<ResponseData> = await this.instance.get(`getPayments?${qs}`);
+    return this.getResultOrFail(data);
+  }
+
+  /**
+   * Use this method to confirm paid invoice of your app. On success, the return confirmed invoice.
+   * @param {number} invoice_id
+   */
+  async confirmPayment(invoice_id: number) {
+    const { data }: AxiosResponse<ResponseData> = await this.instance.post(`confirmPayment`, { invoice_id });
+    return this.getResultOrFail(data);
+  }
+
+  /**
+   * Use this method to get balance of your app. Returns array of assets.
+   */
+  async getBalance() {
+    const { data }: AxiosResponse<ResponseData> = await this.instance.get(`getBalance`);
+    return this.getResultOrFail(data);
+  }
+
+  /**
+   * Use this method to get exchange rates of supported currencies. Returns array of currencies.
+   */
+  async getExchangeRates() {
+    const { data }: AxiosResponse<ResponseData> = await this.instance.get(`getExchangeRates`);
+    return this.getResultOrFail(data);
+  }
+
+  /**
+   * Use this method to supported currencies. Returns array of currencies.
+   */
+  async getCurrencies() {
+    const { data }: AxiosResponse<ResponseData> = await this.instance.get(`getCurrencies`);
+    return this.getResultOrFail(data);
+  }
+
+  private getResultOrFail<R = never>(responseData: ResponseData): R {
+    if (!responseData.ok) {
+      throw new Error(`${responseData.error?.name} ${responseData.error?.code}`);
+    }
+    return responseData.result;
+  }
+}
+
+export * from './types';
