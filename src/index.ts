@@ -8,6 +8,10 @@ import {
   CreateInvoice,
   GetInvoices,
   GetPayments,
+  ConfirmedInvoice,
+  CurrencyBalance,
+  ExchangeRate,
+  Currency,
 } from './types';
 import * as queryString from 'querystring';
 
@@ -82,34 +86,38 @@ export class PayInstance {
   /**
    * Use this method to confirm paid invoice of your app. On success, the return confirmed invoice.
    * @param {number} invoice_id
+   * @returns {Promise<ConfirmedInvoice>}
    */
-  async confirmPayment(invoice_id: number) {
+  async confirmPayment(invoice_id: number): Promise<ConfirmedInvoice> {
     const { data }: AxiosResponse<ResponseData> = await this.instance.post(`confirmPayment`, { invoice_id });
-    return this.getResultOrFail(data);
+    return this.getResultOrFail<ConfirmedInvoice>(data);
   }
 
   /**
    * Use this method to get balance of your app. Returns array of assets.
+   * @returns {Promise<Array<CurrencyBalance>>}
    */
-  async getBalance() {
+  async getBalance(): Promise<Array<CurrencyBalance>> {
     const { data }: AxiosResponse<ResponseData> = await this.instance.get(`getBalance`);
-    return this.getResultOrFail(data);
+    return this.getResultOrFail<Array<CurrencyBalance>>(data);
   }
 
   /**
    * Use this method to get exchange rates of supported currencies. Returns array of currencies.
+   * @returns {Promise<Array<ExchangeRate>>}
    */
-  async getExchangeRates() {
+  async getExchangeRates(): Promise<Array<ExchangeRate>> {
     const { data }: AxiosResponse<ResponseData> = await this.instance.get(`getExchangeRates`);
-    return this.getResultOrFail(data);
+    return this.getResultOrFail<Array<ExchangeRate>>(data);
   }
 
   /**
    * Use this method to supported currencies. Returns array of currencies.
+   * @returns {Promise<Array<Currency>>}
    */
-  async getCurrencies() {
+  async getCurrencies(): Promise<Array<Currency>> {
     const { data }: AxiosResponse<ResponseData> = await this.instance.get(`getCurrencies`);
-    return this.getResultOrFail(data);
+    return this.getResultOrFail<Array<Currency>>(data);
   }
 
   private getResultOrFail<R = never>(responseData: ResponseData<R>): R {

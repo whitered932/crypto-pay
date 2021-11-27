@@ -34,8 +34,6 @@ export interface GetInvoices {
   count?: number;
 }
 
-
-
 export interface ResponseData<T = never> {
   ok: boolean;
   error?: {
@@ -61,6 +59,26 @@ export interface GetPaymentsResponse {
   items: Array<PaidInvoice>;
 }
 
+export interface CurrencyBalance {
+  currency_code: Asset;
+  available: string;
+}
+
+export interface Currency {
+  is_blockchain: boolean;
+  is_stablecoin: boolean;
+  is_fiat: boolean;
+  name: string;
+  code: string;
+  decimals: number;
+}
+export interface ExchangeRate {
+  is_valid: boolean;
+  source: string;
+  target: string;
+  rate: string;
+}
+
 export interface Invoice {
   invoice_id: number;
   status: Status;
@@ -73,6 +91,10 @@ export interface Invoice {
 
 export interface PaidInvoice extends Invoice {
   paid_at: string;
-  paid_anonymously: false;
-  is_confirmed: false;
+  paid_anonymously: boolean;
+  is_confirmed: boolean;
+}
+
+export interface ConfirmedInvoice extends PaidInvoice {
+  confirmed_at: string;
 }
