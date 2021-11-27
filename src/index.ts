@@ -24,38 +24,43 @@ export default (token: string, net: 'main' | 'test' = 'main') => {
   return {
     /**
      * A simple method for testing your app's authentication token. Requires no parameters. Returns basic information about the app.
+     * @type {Function}
      */
     getMe: getMe(instance, token),
     /**
      * Use this method to create a new invoice. Returns object of created invoice.
-     * @param {CreateInvoice} params
+     * @type {Function}
      */
     createInvoice: createInvoice(instance, token),
     /**
      * Use this method to get invoices of your app. On success, the returns array of invoices.
-     * @param {GetInvoices} params
+     * @type {Function}
      */
     getInvoices: getInvoices(instance, token),
     /**
      * Use this method to get paid and unconfirmed invoices of your app. On success, the returns array of paid and unconfirmed invoices.
-     * @param {GetPayments} params
+     * @type {Function}
      */
     getPayments: getPayments(instance, token),
     /**
      * Use this method to confirm paid invoice of your app. On success, the return confirmed invoice.
+     * @type {Function}
      * @param {Number} invoice_id
      */
     confirmPayment: confirmPayment(instance, token),
     /**
      * Use this method to get balance of your app. Returns array of assets.
+     * @type {Function}
      */
     getBalance: getBalance(instance, token),
     /**
      * Use this method to get exchange rates of supported currencies. Returns array of currencies.
+     * @type {Function}
      */
     getExchangeRates: getExchangeRates(instance, token),
     /**
      * Use this method to supported currencies. Returns array of currencies.
+     * @type {Function}
      */
     getCurrencies: getCurrencies(instance, token),
   };
