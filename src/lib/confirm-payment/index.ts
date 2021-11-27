@@ -1,6 +1,9 @@
 import { AxiosInstance, AxiosResponse } from 'axios';
-import { getResultOrFail, ResponseData } from '../@common';
-import { ConfirmPayment } from '../../index';
+import { getResultOrFail, ResponseData } from '../common';
+
+export interface ConfirmPayment {
+  invoice_id: number;
+}
 
 export default (instance: AxiosInstance, token: string) => async (values: ConfirmPayment) => {
   const { data }: AxiosResponse<ResponseData> = await instance.post(`app${token}/confirmPayment`, values);

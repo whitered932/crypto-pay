@@ -1,7 +1,14 @@
 import * as queryString from 'querystring';
 import { AxiosInstance, AxiosResponse } from 'axios';
-import { getResultOrFail, ResponseData } from '../@common';
-import { GetInvoices } from '../../index';
+import { Asset, Status, getResultOrFail, ResponseData } from '../common';
+
+export interface GetInvoices {
+  asset: Asset;
+  invoice_ids?: Array<string | number>;
+  status?: Status;
+  offset?: number;
+  count?: number;
+}
 
 export default (instance: AxiosInstance, token: string) => async (values: GetInvoices) => {
   let qs: string;

@@ -1,7 +1,11 @@
 import { AxiosInstance, AxiosResponse } from 'axios';
 import * as queryString from 'querystring';
-import { getResultOrFail, ResponseData } from '../@common';
-import { GetPayments } from '../../index';
+import { getResultOrFail, ResponseData } from '../common';
+
+export interface GetPayments {
+  offset?: number;
+  count?: number;
+}
 
 export default (instance: AxiosInstance, token: string) => async (values: GetPayments) => {
   const qs = queryString.stringify(values as any);
