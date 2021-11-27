@@ -4,7 +4,7 @@ import { Asset } from '../common';
 
 export interface CreateInvoice {
   asset: Asset;
-  amount: string;
+  amount: string | number;
   description?: string;
   paid_btn_name?: "viewItem" | "openChannel" | "openBot" | "callback";
   paid_btn_url?: string;
