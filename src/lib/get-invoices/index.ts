@@ -10,7 +10,7 @@ export interface GetInvoices {
   count?: number;
 }
 
-export default (instance: AxiosInstance, token: string) => async (values: GetInvoices) => {
+export const getInvoices = (instance: AxiosInstance, token: string) => async (values: GetInvoices) => {
   let qs: string;
   if (values.invoice_ids) {
     qs = queryString.stringify({ ...values, invoice_ids: values.invoice_ids?.join(',') });

@@ -12,7 +12,7 @@ export interface CreateInvoice {
   payload?: string;
 }
 
-export default (instance: AxiosInstance, token: string) => async (values: CreateInvoice) => {
+export const createInvoice = (instance: AxiosInstance, token: string) => async (values: CreateInvoice) => {
   const { data } = (await instance.post(`app${token}/createInvoice`, values)) as AxiosResponse<ResponseData>;
   return getResultOrFail(data);
 };
