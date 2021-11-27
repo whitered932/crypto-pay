@@ -75,7 +75,7 @@ export default (token: string, net: 'main' | 'test' = 'main') => {
     },
     getInvoices: async (values: GetInvoices) => {
       const preparedIds = values.invoice_ids?.join(',');
-      const qs = queryString.stringify({ ...values, invoice_ids: preparedIds });
+      const qs = queryString.stringify({ ...values, invoice_ids: preparedIds || [] });
       const { data }: AxiosResponse<ResponseData> = await instance.get(`app${token}/getInvoices?${qs}`);
       return getDataOrFail(data);
     },
