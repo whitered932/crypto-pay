@@ -1,12 +1,12 @@
 import axios from 'axios';
-import getMe from './get-me';
-import createInvoice from './create-invoice';
-import getInvoices from './get-invoices';
-import getPayments from './get-payments';
-import confirmPayment from './confirm-payment';
-import getBalance from './get-balance';
-import getExchangeRates from './get-exchange-rates';
-import getCurrencies from './get-currencies';
+import getMe from './lib/get-me';
+import createInvoice from './lib/create-invoice';
+import getInvoices from './lib/get-invoices';
+import getPayments from './lib/get-payments';
+import confirmPayment from './lib/confirm-payment';
+import getBalance from './lib/get-balance';
+import getExchangeRates from './lib/get-exchange-rates';
+import getCurrencies from './lib/get-currencies';
 
 export enum Asset {
   BTC = 'BTC',

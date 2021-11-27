@@ -20,7 +20,7 @@ export interface CreateInvoice {
 }
 export interface GetInvoices {
     asset: Asset;
-    invoice_ids?: string[];
+    invoice_ids?: Array<string | number>;
     status?: Status;
     offset?: number;
     count?: number;
