@@ -1,6 +1,6 @@
 # @dotred/crypto-pay
 * **Crypto Pay** is a payment system based on [@CryptoBot](http://t.me/CryptoBot), which allows you to accept payments in cryptocurrency using the API.
-* **@dotred/crypto-pay** - @is a wrapper over the Crypto Bot API, which makes it easier to interact with the API
+* **@dotred/crypto-pay** - is a wrapper over the Crypto Pay API, which makes it easier to interact with the API
 ## Documentation
 ### 1. Installation
 To install the library, you need to run the following commands:
