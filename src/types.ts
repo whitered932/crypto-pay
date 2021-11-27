@@ -27,9 +27,52 @@ export interface CreateInvoice<T> {
 }
 
 export interface GetInvoices {
-  asset: Asset;
+  asset?: Asset;
   invoice_ids?: Array<string | number>;
   status?: Status;
   offset?: number;
   count?: number;
+}
+
+
+
+export interface ResponseData<T = never> {
+  ok: boolean;
+  error?: {
+    code: number;
+    name: string;
+  };
+  result: T;
+}
+
+export interface GetMeResponse {
+  app_id: number;
+  name: string;
+  payment_processing_bot_username: string;
+}
+
+export interface GetInvoicesResponse {
+  count: number;
+  items: Array<Invoice>;
+}
+
+export interface GetPaymentsResponse {
+  count: number;
+  items: Array<PaidInvoice>;
+}
+
+export interface Invoice {
+  invoice_id: number;
+  status: Status;
+  hash: string;
+  asset: Asset;
+  amount: string;
+  pay_url: string;
+  created_at: string;
+}
+
+export interface PaidInvoice extends Invoice {
+  paid_at: string;
+  paid_anonymously: false;
+  is_confirmed: false;
 }
