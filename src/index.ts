@@ -27,7 +27,7 @@ export interface CreateInvoice {
 
 export interface GetInvoices {
   asset: Asset;
-  invoice_ids?: string[];
+  invoice_ids?: Array<string | number>;
   status?: Status;
   offset?: number;
   count?: number;
@@ -74,8 +74,12 @@ export default (token: string, net: 'main' | 'test' = 'main') => {
       return getDataOrFail(data);
     },
     getInvoices: async (values: GetInvoices) => {
-      const preparedIds = values.invoice_ids?.join(',');
-      const qs = queryString.stringify({ ...values, invoice_ids: preparedIds || [] });
+      let qs: string;
+      if (values.invoice_ids) {
+        qs = queryString.stringify({ ...values, invoice_ids: values.invoice_ids?.join(',') });
+      } else {
+        qs = queryString.stringify(values as any);
+      }
       const { data }: AxiosResponse<ResponseData> = await instance.get(`app${token}/getInvoices?${qs}`);
       return getDataOrFail(data);
     },
