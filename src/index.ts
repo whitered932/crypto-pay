@@ -20,14 +20,14 @@ import Joi = require('joi');
  * Use this method to create a new pay-instance
  * @param {String} token
  * @param {('main'|'test')} type default: main
- * @returns {PayInstance}
+ * @returns {CryptoPay}
  */
-export default (token: string, type: 'test' | 'main' = 'main') => new PayInstance(token, type);
+export default (token: string, type: 'test' | 'main' = 'main') => new CryptoPay(token, type);
 
 /**
  * Pay instance
  */
-export class PayInstance {
+export class CryptoPay {
   private instance: AxiosInstance;
 
   constructor(token: string, type: 'test' | 'main' = 'main') {
@@ -54,7 +54,6 @@ export class PayInstance {
    * @param {CreateInvoice} values
    * @returns {Promise<Invoice>}
    */
-  // @ts-ignore
   async createInvoice<T>(values: CreateInvoice<T>): Promise<Invoice> {
     const schema = Joi.object<CreateInvoice<T>>({
       asset: Joi.string().required(),

@@ -36,12 +36,12 @@ To start interacting with the API, you need to create a pay-instance. To do this
 library and call it by passing the previously received token
 
 ```ts import createPayInstance from '@dotred/crypto-pay';    
-import createPayInstance, { PayInstance } from './index';
+import createPayInstance, { CryptoPay } from '@dotred/crypto-pay';
 
 // You can create instance using function
 const instance = createPayInstance('your_token');
 // or class
-const instance = new PayInstance('your_token')
+const instance = new CryptoPay('your_token')
 
 // If you want to use Testnet, you must pass the network type as the second parameter 
 const instance = createPayInstance('your_token', 'test');   

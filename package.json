@@ -1,6 +1,27 @@
 {
   "name": "@dotred/crypto-pay",
-  "version": "2.0.9",
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "ts",
+      "json"
+    ],
+    "rootDir": "./",
+    "moduleNameMapper": {
+      "@root-dir/(.*)": "<rootDir>/$1",
+      "~/(.*)": "<rootDir>/src/$1"
+    },
+    "testRegex": ".*\\.spec\\.ts$",
+    "transform": {
+      "^.+\\.(t|j)s$": "ts-jest"
+    },
+    "transformIgnorePatterns": [
+      "@root-dir/",
+      "node_modules/"
+    ],
+    "testEnvironment": "node"
+  },
+  "version": "2.1.0",
   "description": "@dotred/crypto-pay - is a wrapper over the Crypto Pay API, which makes it easier to interact with the API",
   "main": "index.js",
   "scripts": {
