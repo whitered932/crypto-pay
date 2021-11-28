@@ -84,7 +84,15 @@ export class PayInstance {
    * @returns {Promise<GetInvoicesResponse>}
    */
   async getInvoices(values: GetInvoices = {}): Promise<GetInvoicesResponse> {
-    // TODO: extract
+    const schema = Joi.object<GetInvoices>({
+      asset: Joi.string().valid('BTC', 'TON', 'ETH', 'USDT', 'USDC', 'BUSD').optional(),
+      invoice_ids: Joi.array().optional(),
+      status: Joi.string().valid('PAID', 'ACTIVE').optional(),
+      offset: Joi.number().optional(),
+      count: Joi.number().max(1000).optional(),
+    });
+    await schema.validateAsync(values);
+
     let qs: string;
     if (values.invoice_ids) {
       qs = queryString.stringify({ ...values, invoice_ids: values.invoice_ids?.join(',') });
@@ -101,6 +109,12 @@ export class PayInstance {
    * @returns {Promise<GetPaymentsResponse>}
    */
   async getPayments(values: GetPayments = {}): Promise<GetPaymentsResponse> {
+    const schema = Joi.object<GetPayments>({
+      offset: Joi.number().optional(),
+      count: Joi.number().max(1000).optional(),
+    });
+    await schema.validateAsync(values);
+
     const qs = queryString.stringify(values as never);
     const { data }: AxiosResponse<ResponseData> = await this.instance.get(`getPayments?${qs}`);
     return this.getResultOrFail<GetPaymentsResponse>(data);
@@ -112,6 +126,9 @@ export class PayInstance {
    * @returns {Promise<ConfirmedInvoice>}
    */
   async confirmPayment(invoice_id: number): Promise<ConfirmedInvoice> {
+    const schema = Joi.number().required();
+    await schema.validateAsync(invoice_id);
+
     const { data }: AxiosResponse<ResponseData> = await this.instance.post(`confirmPayment`, { invoice_id });
     return this.getResultOrFail<ConfirmedInvoice>(data);
   }
@@ -148,10 +165,6 @@ export class PayInstance {
       throw new Error(`${responseData.error?.name} ${responseData.error?.code}`);
     }
     return responseData.result;
-  }
-
-  private existsBoth<A, B>(firstProperty: A | undefined, secondProperty: B | undefined): boolean {
-    return Boolean((!firstProperty && !secondProperty) || (firstProperty && secondProperty));
   }
 }
 
