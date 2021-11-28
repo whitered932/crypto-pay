@@ -51,6 +51,9 @@ export class PayInstance {
    * @returns {Promise<Invoice>}
    */
   async createInvoice<T>(values: CreateInvoice<T>): Promise<Invoice> {
+    if (!this.existsBoth(values.paid_btn_name, values.paid_btn_url)) {
+      throw new Error('The properties of paid_btn_* cannot exist without each other');
+    }
     const { data } = (await this.instance.post(`createInvoice`, values)) as AxiosResponse<ResponseData<Invoice>>;
     return this.getResultOrFail(data);
   }
@@ -125,6 +128,10 @@ export class PayInstance {
       throw new Error(`${responseData.error?.name} ${responseData.error?.code}`);
     }
     return responseData.result;
+  }
+
+  private existsBoth<A, B>(firstProperty: A | undefined, secondProperty: B | undefined): boolean {
+    return Boolean((!firstProperty && !secondProperty) || (firstProperty && secondProperty));
   }
 }
 
