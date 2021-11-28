@@ -1,6 +1,6 @@
 {
   "name": "@dotred/crypto-pay",
-  "version": "2.0.7",
+  "version": "2.0.8",
   "description": "@dotred/crypto-pay - is a wrapper over the Crypto Pay API, which makes it easier to interact with the API",
   "main": "index.js",
   "scripts": {

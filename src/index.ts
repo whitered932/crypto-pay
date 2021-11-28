@@ -57,17 +57,10 @@ export class PayInstance {
       amount: Joi.any().required(),
       description: Joi.string().max(1024).optional(),
       paid_btn_name: Joi.string().valid('viewItem', 'openChannel', 'openBot', 'callback').optional(),
-      paid_btn_url: Joi.string()
-        .uri()
-        .optional()
-        .when('paid_btn_name', {
-          is: Joi.exist(),
-          then: Joi.required(),
-          otherwise: Joi.forbidden(),
-        })
-        .messages({
-          'any.unknown': 'You cannot use paid_btn_url without paid_btn_name',
-        }),
+      paid_btn_url: Joi.string().uri().optional().when('paid_btn_name', {
+        is: Joi.exist(),
+        then: Joi.required(),
+      }),
       allow_anonymous: Joi.boolean().optional(),
       allow_comments: Joi.boolean().optional(),
       payload: Joi.object().optional(),
