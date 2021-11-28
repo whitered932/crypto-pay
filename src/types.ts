@@ -24,6 +24,8 @@ export interface CreateInvoice<T> {
   paid_btn_name?: 'viewItem' | 'openChannel' | 'openBot' | 'callback';
   paid_btn_url?: string;
   payload?: Record<string, T>;
+  allow_comments?: boolean;
+  allow_anonymous?: boolean;
 }
 
 export interface GetInvoices {

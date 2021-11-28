@@ -10,6 +10,7 @@
 ### 1. Installation
 
 To install the library, you need to run the following commands:
+Supported node versions: 12.22.7+
 
 1. if you are use npm -
 
@@ -25,11 +26,14 @@ yarn add @dotred/crypto-pay
 
 ### 2. Creating token
 
-First, you need to create your application and get an API token. Open [@CryptoBot](http://t.me/CryptoBot?start=pay) or [@CryptoTestnetBot](http://t.me/CryptoTestnetBot?start=pay) (for testnet), send a command `/pay` to create a new app and get API Token.
+First, you need to create your application and get an API token. Open [@CryptoBot](http://t.me/CryptoBot?start=pay)
+or [@CryptoTestnetBot](http://t.me/CryptoTestnetBot?start=pay) (for testnet), send a command `/pay` to create a new app
+and get API Token.
 
 ### 3. Creating pay-instance
 
-To start interacting with the API, you need to create a pay-instance. To do this, import the standard method from the library and call it by passing the previously received token
+To start interacting with the API, you need to create a pay-instance. To do this, import the standard method from the
+library and call it by passing the previously received token
 
 ```ts import createPayInstance from '@dotred/crypto-pay';    
 import createPayInstance, { PayInstance } from './index';
@@ -77,7 +81,8 @@ Use this method to create a new pay-instance. Returns an object containing all t
 
 #### getMe
 
-A simple method for testing your app's authentication token. Requires no parameters. Returns basic information about the app.
+A simple method for testing your app's authentication token. Requires no parameters. Returns basic information about the
+app.
 
 #### createInvoice
 
