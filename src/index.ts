@@ -34,6 +34,9 @@ export class PayInstance {
     const baseURL = type === 'main' ? `https://pay.crypt.bot/app${token}` : `https://testnet-pay.crypt.bot/app${token}`;
     this.instance = axios.create({
       baseURL,
+      validateStatus: (status) => {
+        return status > 200;
+      },
     });
   }
 
@@ -51,6 +54,7 @@ export class PayInstance {
    * @param {CreateInvoice} values
    * @returns {Promise<Invoice>}
    */
+  // @ts-ignore
   async createInvoice<T>(values: CreateInvoice<T>): Promise<Invoice> {
     const schema = Joi.object<CreateInvoice<T>>({
       asset: Joi.string().required(),
