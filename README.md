@@ -35,6 +35,23 @@ and get API Token.
 To start interacting with the API, you need to create a pay-instance. To do this, import the standard method from the
 library and call it by passing the previously received token
 
+
+
+CommonJS example
+```ts import createPayInstance from '@dotred/crypto-pay';    
+const {Asset, createPayInstance} = require('@dotred/crypto-pay');
+const instance = new createPayInstance('3323:AAlJ6KtPZCeXz8TVEQNX0lMhAldmclcmtnv', 'test');
+const workWithInvoices = async () => {
+  await instance.createInvoice({asset: Asset.BTC, amount: '0.00005',});
+  await instance.createInvoice({asset: Asset.BTC, amount: '0.000045',});
+  await instance.createInvoice({asset: Asset.TON, amount: '12',});
+  const invoices = await instance.getInvoices();
+  console.log(invoices);
+}
+workWithInvoices().then().catch();   
+```  
+
+TypeScript example
 ```ts import createPayInstance from '@dotred/crypto-pay';    
 import createPayInstance, { CryptoPay } from '@dotred/crypto-pay';
 
