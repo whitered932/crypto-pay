@@ -70,6 +70,7 @@ export class CryptoPay {
     });
     await schema.validateAsync(values);
 
+    if (values.payload) values.payload = JSON.stringify(values.payload) as Record<never, never>;
     const { data } = (await this.instance.post(`createInvoice`, values)) as AxiosResponse<ResponseData<Invoice>>;
     return this.getResultOrFail(data);
   }
