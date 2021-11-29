@@ -21,7 +21,7 @@
     ],
     "testEnvironment": "node"
   },
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "@dotred/crypto-pay - is a wrapper over the Crypto Pay API, which makes it easier to interact with the API",
   "main": "index.js",
   "scripts": {

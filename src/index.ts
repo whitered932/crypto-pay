@@ -35,7 +35,7 @@ export class CryptoPay {
     this.instance = axios.create({
       baseURL,
       validateStatus: (status) => {
-        return status > 200;
+        return status >= 200;
       },
     });
   }
