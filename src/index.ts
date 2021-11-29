@@ -22,7 +22,8 @@ import Joi = require('joi');
  * @param {('main'|'test')} type default: main
  * @returns {CryptoPay}
  */
-export default (token: string, type: 'test' | 'main' = 'main') => new CryptoPay(token, type);
+
+// export default (token: string, type: 'test' | 'main' = 'main') => new CryptoPay(token, type);
 
 /**
  * Pay instance
@@ -170,3 +171,5 @@ export class CryptoPay {
 }
 
 export * from './types';
+export const createPayInstance = (token: string, type: 'test' | 'main' = 'main') => new CryptoPay(token, type);
+export default createPayInstance;
