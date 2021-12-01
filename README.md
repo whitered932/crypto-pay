@@ -5,7 +5,7 @@
   in cryptocurrency using the API.
 * **@dotred/crypto-pay** - is a wrapper over the Crypto Pay API, which makes it easier to interact with the API
 
-## Updates
+## Important updates
 *2.2.0*
 1. Removed: getPayments & confirmPayment.
 
@@ -43,7 +43,7 @@ CommonJS example
 
 ```ts import createPayInstance from '@dotred/crypto-pay';    
 const { Asset, createPayInstance } = require('@dotred/crypto-pay');
-const instance = new createPayInstance('3323:AAlJ6KtPZCeXz8TVEQNX0lMhAldmclcmtnv', 'test');
+const instance = createPayInstance('3323:AAlJ6KtPZCeXz8TVEQNX0lMhAldmclcmtnv', 'test');
 const workWithInvoices = async () => {
   await instance.createInvoice({ asset: Asset.BTC, amount: '0.00005', });
   await instance.createInvoice({ asset: Asset.BTC, amount: '0.000045', });

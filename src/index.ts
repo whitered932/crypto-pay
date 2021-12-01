@@ -29,9 +29,12 @@ export class CryptoPay {
   private instance: AxiosInstance;
 
   constructor(token: string, type: 'test' | 'main' = 'main') {
-    const baseURL = type === 'main' ? `https://pay.crypt.bot/app${token}` : `https://testnet-pay.crypt.bot/app${token}`;
+    const baseURL = type === 'main' ? `https://pay.crypt.bot/api` : `https://testnet-pay.crypt.bot/api`;
     this.instance = axios.create({
       baseURL,
+      headers: {
+        'Crypto-Pay-API-Token': token,
+      },
       validateStatus: (status) => {
         return status >= 200;
       },

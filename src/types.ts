@@ -64,6 +64,7 @@ export interface Currency {
   code: string;
   decimals: number;
 }
+
 export interface ExchangeRate {
   is_valid: boolean;
   source: string;
@@ -79,10 +80,6 @@ export interface Invoice {
   amount: string;
   pay_url: string;
   created_at: string;
-}
-
-export interface PaidInvoice extends Invoice {
-  paid_at: string;
-  paid_anonymously: boolean;
-  is_confirmed: boolean;
+  paid_at?: string;
+  paid_anonymously?: boolean;
 }
