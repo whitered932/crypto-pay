@@ -12,11 +12,6 @@ export enum Asset {
   BUSD = 'BUSD',
 }
 
-export interface GetPayments {
-  offset?: number;
-  count?: number;
-}
-
 export interface CreateInvoice<T> {
   asset: Asset;
   amount: string | number;
@@ -56,11 +51,6 @@ export interface GetInvoicesResponse {
   items: Array<Invoice>;
 }
 
-export interface GetPaymentsResponse {
-  count: number;
-  items: Array<PaidInvoice>;
-}
-
 export interface CurrencyBalance {
   currency_code: Asset;
   available: string;
@@ -95,8 +85,4 @@ export interface PaidInvoice extends Invoice {
   paid_at: string;
   paid_anonymously: boolean;
   is_confirmed: boolean;
-}
-
-export interface ConfirmedInvoice extends PaidInvoice {
-  confirmed_at: string;
 }

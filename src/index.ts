@@ -2,13 +2,10 @@ import axios, { AxiosInstance, AxiosResponse } from 'axios';
 import {
   Invoice,
   GetInvoicesResponse,
-  GetPaymentsResponse,
   ResponseData,
   GetMeResponse,
   CreateInvoice,
   GetInvoices,
-  GetPayments,
-  ConfirmedInvoice,
   CurrencyBalance,
   ExchangeRate,
   Currency,
@@ -103,36 +100,6 @@ export class CryptoPay {
     }
     const { data }: AxiosResponse<ResponseData> = await this.instance.get(`getInvoices?${qs}`);
     return this.getResultOrFail(data);
-  }
-
-  /**
-   * Use this method to get paid and unconfirmed invoices of your app. On success, the returns array of paid and unconfirmed invoices.
-   * @param {GetPayments} values
-   * @returns {Promise<GetPaymentsResponse>}
-   */
-  async getPayments(values: GetPayments = {}): Promise<GetPaymentsResponse> {
-    const schema = Joi.object<GetPayments>({
-      offset: Joi.number().optional(),
-      count: Joi.number().max(1000).optional(),
-    });
-    await schema.validateAsync(values);
-
-    const qs = queryString.stringify(values as never);
-    const { data }: AxiosResponse<ResponseData> = await this.instance.get(`getPayments?${qs}`);
-    return this.getResultOrFail<GetPaymentsResponse>(data);
-  }
-
-  /**
-   * Use this method to confirm paid invoice of your app. On success, the return confirmed invoice.
-   * @param {number} invoice_id
-   * @returns {Promise<ConfirmedInvoice>}
-   */
-  async confirmPayment(invoice_id: number): Promise<ConfirmedInvoice> {
-    const schema = Joi.number().required();
-    await schema.validateAsync(invoice_id);
-
-    const { data }: AxiosResponse<ResponseData> = await this.instance.post(`confirmPayment`, { invoice_id });
-    return this.getResultOrFail<ConfirmedInvoice>(data);
   }
 
   /**
